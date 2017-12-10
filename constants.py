@@ -1,0 +1,20 @@
+import math
+import pygameVec2d as VL
+#from SFsettings import *
+
+SCREEN_WIDTH= 1300
+SCREEN_HEIGHT=700
+
+
+SCREEN_CENTRE = VL.Vec2d(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+DEBUG_VERBOSITY =1
+WHITE = (255, 255, 255)
+PINK = (252, 15, 192)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+
+FPS = 60
+
+FP_ERROR = 1e-6
+
+

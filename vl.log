@@ -1,0 +1,125 @@
+DEBUG:root:This message should go to the log file
+DEBUG:root:initialising model component.  Objectlist = 
+[<__main__.drawablePolygonModel object at 0x10d995ad0>, <__main__.drawablePolygonModel object at 0x10dc1f350>, (75,965)-(80,958), (80,958)-(75,950)]
+DEBUG:root:initialising model component.  Objectlist = 
+[<__main__.drawablePolygonModel object at 0x10dc49a10>]
+DEBUG:root:Importing point lists -> setting rotation point
+DEBUG:root:rotation point  = Vec2d(75.0, 958.0)
+DEBUG:root:modelComponent before to offset, points = [Vec2d(50.0, 973.0), Vec2d(100.0, 958.0), Vec2d(50.0, 943.0), Vec2d(65.0, 953.0), Vec2d(65.0, 963.0)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(-25.0, 15.0), Vec2d(25.0, 0.0), Vec2d(-25.0, -15.0), Vec2d(-10.0, -5.0), Vec2d(-10.0, 5.0)], p1=None, p2=None
+DEBUG:root:modelComponent before to offset, points = [Vec2d(60.0, 962.0), Vec2d(65.0, 962.0), Vec2d(65.0, 953.0), Vec2d(60.0, 954.0)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(-15.0, 4.0), Vec2d(-10.0, 4.0), Vec2d(-10.0, -5.0), Vec2d(-15.0, -4.0)], p1=None, p2=None
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(75, 965), p2=Vec2d(80, 958)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(0.0, 7.0), p2=Vec2d(5.0, 0.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(80, 958), p2=Vec2d(75, 950)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(5.0, 0.0), p2=Vec2d(0.0, -8.0)
+DEBUG:root:modelComponent before to offset, points = [Vec2d(60.0, 962), Vec2d(50, 957.5), Vec2d(60.0, 953.0)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(-15.0, 4.0), Vec2d(-25.0, -0.5), Vec2d(-15.0, -5.0)], p1=None, p2=None
+DEBUG:root:Generating base collision lists
+DEBUG:root:BASE: LS list = [(-10,5)-(-25,15), (-25,15)-(25,0), (25,0)-(-25,-15), (-25,-15)-(-10,-5), (-10,-5)-(-10,5), (-15,-4)-(-15,4), (-15,4)-(-10,4), (-10,4)-(-10,-5), (-10,-5)-(-15,-4), (0,7)-(5,0), (5,0)-(0,-8), (-15,-5)-(-15,4), (-15,4)-(-25,-0), (-25,-0)-(-15,-5)]
+Arclist = []
+DEBUG:root:MC.selflongestray -> [7.0, 8.0, 15.524174696260024, 29.154759474226502]
+DEBUG:root:MC.selflongestray -> [25.004999500099974]
+DEBUG:root:update Render Width
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (200, 200), scaleFactor = 0.840343067198
+DEBUG:root:actual LSlist = [(217,229)-(204,238), (204,238)-(246,225), (246,225)-(204,212), (204,212)-(217,221), (217,221)-(217,229), (212,222)-(212,228), (212,228)-(217,228), (217,228)-(217,221), (217,221)-(212,222), (225,231)-(229,225), (229,225)-(225,218), (212,221)-(212,228), (212,228)-(204,225), (204,225)-(212,221)]
+Actual ArcList= []
+DEBUG:root:initialising model component.  Objectlist = 
+[<__main__.drawablePolygonModel object at 0x10dc51e10>, (84,915)-(63,910), (63,910)-(84,904), (76,907)-(63,895), (76,913)-(63,925), (73,925)-(48,925), (73,895)-(48,895)]
+DEBUG:root:initialising model component.  Objectlist = 
+[<__main__.drawablePolygonModel object at 0x10dc5fed0>, <__main__.drawablePolygonModel object at 0x10dc65250>]
+DEBUG:root:Importing point lists -> setting rotation point
+DEBUG:root:rotation point  = Vec2d(76.0, 911.0)
+DEBUG:root:modelComponent before to offset, points = [Vec2d(87, 920), Vec2d(98, 920), Vec2d(104, 910), Vec2d(98, 900), Vec2d(87, 900), Vec2d(81, 910)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(11.0, 9.0), Vec2d(22.0, 9.0), Vec2d(28.0, -1.0), Vec2d(22.0, -11.0), Vec2d(11.0, -11.0), Vec2d(5.0, -1.0)], p1=None, p2=None
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(84, 915), p2=Vec2d(63, 910)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(8.0, 4.0), p2=Vec2d(-13.0, -1.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(63, 910), p2=Vec2d(84, 904)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(-13.0, -1.0), p2=Vec2d(8.0, -7.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(76.0, 907.0), p2=Vec2d(63.0, 895.0)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(0.0, -4.0), p2=Vec2d(-13.0, -16.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(76, 913), p2=Vec2d(63, 925)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(0.0, 2.0), p2=Vec2d(-13.0, 14.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(73.0, 925.0), p2=Vec2d(48.0, 925.0)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(-3.0, 14.0), p2=Vec2d(-28.0, 14.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=Vec2d(73.0, 895.0), p2=Vec2d(48.0, 895.0)
+DEBUG:root:modelComponent after to offset,  points = [], p1=Vec2d(-3.0, -16.0), p2=Vec2d(-28.0, -16.0)
+DEBUG:root:modelComponent before to offset, points = [Vec2d(73.0, 925.0), Vec2d(48.0, 925.0), Vec2d(48.0, 927.0), Vec2d(73.0, 927.0)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(-3.0, 14.0), Vec2d(-28.0, 14.0), Vec2d(-28.0, 16.0), Vec2d(-3.0, 16.0)], p1=None, p2=None
+DEBUG:root:modelComponent before to offset, points = [Vec2d(73.0, 895.0), Vec2d(48.0, 895.0), Vec2d(48.0, 897.0), Vec2d(73.0, 897.0)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(-3.0, -16.0), Vec2d(-28.0, -16.0), Vec2d(-28.0, -14.0), Vec2d(-3.0, -14.0)], p1=None, p2=None
+DEBUG:root:Generating base collision lists
+DEBUG:root:BASE: LS list = [(5,-1)-(11,9), (11,9)-(22,9), (22,9)-(28,-1), (28,-1)-(22,-11), (22,-11)-(11,-11), (11,-11)-(5,-1), (8,4)-(-13,-1), (-13,-1)-(8,-7), (0,-4)-(-13,-16), (0,2)-(-13,14), (-3,14)-(-28,14), (-3,-16)-(-28,-16), (-3,16)-(-3,14), (-3,14)-(-28,14), (-28,14)-(-28,16), (-28,16)-(-3,16), (-3,-14)-(-3,-16), (-3,-16)-(-28,-16), (-28,-16)-(-28,-14), (-28,-14)-(-3,-14)]
+Arclist = []
+DEBUG:root:MC.selflongestray -> [13.038404810405298, 13.038404810405298, 19.1049731745428, 20.615528128088304, 28.0178514522438, 31.304951684997057, 32.2490309931942]
+DEBUG:root:MC.selflongestray -> [32.2490309931942, 32.2490309931942]
+DEBUG:root:update Render Width
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (200, 200), scaleFactor = 0.759712749359
+DEBUG:root:actual LSlist = [(229,224)-(233,232), (233,232)-(242,232), (242,232)-(246,224), (246,224)-(242,217), (242,217)-(233,217), (233,217)-(229,224), (231,228)-(215,224), (215,224)-(231,220), (225,222)-(215,213), (225,227)-(215,236), (223,236)-(204,236), (223,213)-(204,213), (223,237)-(223,236), (223,236)-(204,236), (204,236)-(204,237), (204,237)-(223,237), (223,214)-(223,213), (223,213)-(204,213), (204,213)-(204,214), (204,214)-(223,214)]
+Actual ArcList= []
+DEBUG:root:initialising model component.  Objectlist = 
+[<__main__.drawablePolygonModel object at 0x10dc6e890>]
+DEBUG:root:Importing point lists -> setting rotation point
+DEBUG:root:rotation point  = Vec2d(0.0, 0.0)
+DEBUG:root:modelComponent before to offset, points = [Vec2d(100, 100), Vec2d(-100, 100), Vec2d(-100, -100), Vec2d(100, -100)], p1=None, p2=None
+DEBUG:root:modelComponent after to offset,  points = [Vec2d(100.0, 100.0), Vec2d(-100.0, 100.0), Vec2d(-100.0, -100.0), Vec2d(100.0, -100.0)], p1=None, p2=None
+DEBUG:root:Generating base collision lists
+DEBUG:root:BASE: LS list = [(100,-100)-(100,100), (100,100)-(-100,100), (-100,100)-(-100,-100), (-100,-100)-(100,-100)]
+Arclist = []
+DEBUG:root:MC.selflongestray -> [141.4213562373095]
+DEBUG:root:update Render Width
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (200, 200), scaleFactor = 0.350017856687
+DEBUG:root:actual LSlist = [(285,215)-(285,285), (285,285)-(215,285), (215,285)-(215,215), (215,215)-(285,215)]
+Actual ArcList= []
+DEBUG:root:Initialising centre of drawableV2dCA
+DEBUG:root:initialising model component.  Objectlist = 
+[Vec2dCircArc[Vec2d(100, 100), r: 10, d: 20.0]]
+DEBUG:root:Importing point lists -> setting rotation point
+DEBUG:root:rotation point  = Vec2d(100.0, 100.0)
+DEBUG:root:modelComponent before to offset, points = [], p1=None, p2=None
+DEBUG:root:in toOffsetTo, finding offset to point Vec2d(100.0, 100.0)
+DEBUG:root:after, centre = Vec2d(0.0, 0.0)
+DEBUG:root:modelComponent after to offset,  points = [], p1=None, p2=None
+DEBUG:root:Generating base collision lists
+DEBUG:root:BASE: LS list = []
+Arclist = [Vec2dCircArc[Vec2d(0.0, 0.0), r: 10, d: 20.0]]
+DEBUG:root:MC.selflongestray -> [10.0]
+DEBUG:root:update Render Width
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (200, 200), scaleFactor = 0.45
+DEBUG:root:actual LSlist = []
+Actual ArcList= [Vec2dCircArc[Vec2d(205.0, 205.0), r: 4.5, d: 9.0]]
+DEBUG:root:In update
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (150, 150), scaleFactor = 0.350017856687
+DEBUG:root:actual LSlist = [(237,167)-(233,237), (233,237)-(163,233), (163,233)-(167,163), (167,163)-(237,167)]
+Actual ArcList= []
+DEBUG:root:In update
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (75, 75), scaleFactor = 0.840343067198
+DEBUG:root:actual LSlist = [(92,104)-(79,113), (79,113)-(121,100), (121,100)-(79,87), (79,87)-(92,96), (92,96)-(92,104), (87,97)-(87,103), (87,103)-(92,103), (92,103)-(92,96), (92,96)-(87,97), (100,106)-(104,100), (104,100)-(100,93), (87,96)-(87,103), (87,103)-(79,100), (79,100)-(87,96)]
+Actual ArcList= []
+DEBUG:root:In update
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (174, 75), scaleFactor = 0.759712749359
+DEBUG:root:actual LSlist = [(203,99)-(207,107), (207,107)-(215,108), (215,108)-(220,100), (220,100)-(216,93), (216,93)-(208,92), (208,92)-(203,99), (205,103)-(189,99), (189,99)-(205,95), (199,97)-(190,87), (199,102)-(189,110), (196,110)-(177,109), (197,88)-(178,87), (196,112)-(196,110), (196,110)-(177,109), (177,109)-(177,111), (177,111)-(196,112), (197,89)-(197,88), (197,88)-(178,87), (178,87)-(178,88), (178,88)-(197,89)]
+Actual ArcList= []
+DEBUG:root:In update
+DEBUG:root:updating render list
+DEBUG:root:updating collsion lists
+DEBUG:root:topleft = (95, 95), scaleFactor = 0.45
+DEBUG:root:actual LSlist = []
+Actual ArcList= [Vec2dCircArc[Vec2d(100.0, 100.0), r: 4.5, d: 9.0]]
+DEBUG:root:Self collisionLSList = [(92,104)-(79,113), (79,113)-(121,100), (121,100)-(79,87), (79,87)-(92,96), (92,96)-(92,104), (87,97)-(87,103), (87,103)-(92,103), (92,103)-(92,96), (92,96)-(87,97), (100,106)-(104,100), (104,100)-(100,93), (87,96)-(87,103), (87,103)-(79,100), (79,100)-(87,96)]
+DEBUG:root:CompareLSlist = []
+Arclist= [Vec2dCircArc[Vec2d(100.0, 100.0), r: 4.5, d: 9.0]]
