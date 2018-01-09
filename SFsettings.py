@@ -1,4 +1,4 @@
-''' Settings for space Fighto'''
+''' Settings for space war'''
 
 import pygame
 import logging
@@ -698,7 +698,7 @@ if __name__ == "__main__":
     
     
     
-    settings = Settings(settingsList =[gravityScale, bulletSpeed, thrusterPower],  header ="Space Fighto! Settings")
+    settings = Settings(settingsList =[gravityScale, bulletSpeed, thrusterPower],  header ="Space War! Settings")
     valuesDict = settings.settingsShow()
     
     print "Got the following: \n%s"%valuesDict
