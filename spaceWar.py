@@ -516,7 +516,7 @@ class Game(object):
         from SFsettings import Settings
         from settingsWidgets import settingsList
 
-        self.settings = Settings(header ="Fighto! Settings",  footer = "", 
+        self.settings = Settings(header ="SpaceWar! Settings",  footer = "", 
                                      settingsList = settingsList,  # imported from constants
                                      fgColour=WHITE,  bgColour= BLACK)
         self.createAttrsFromSettings()
@@ -759,7 +759,7 @@ s for bullet time '''
         
         time.sleep(interlinePause/1000.0)
         
-        splash2 = splashFont.render("Fighto!",  True,  splashColour,  BACKGROUND_COLOUR)
+        splash2 = splashFont.render("SpaceWar!",  True,  splashColour,  BACKGROUND_COLOUR)
         s2x= roX+180
         r2= self.screen.blit(splash2, (s2x, roY+180))  # Next row of text
         pygame.display.update(r2)
