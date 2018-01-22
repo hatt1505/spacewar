@@ -1,15 +1,16 @@
-import SFsettings
+
+import SWsettings
 
 ################
 #
-#  Space Fighto! Settings 
+
 #
 ###############
 
-gravityScale = SFsettings.individualSetting(
+gravityScale = SWsettings.individualSetting(
             label = "Gravity Strength",  
             id = "gravityScale",  
-            widgetType = SFsettings.FLOATWIDGET,  
+            widgetType = SWsettings.FLOATWIDGET,
             rangeStart= -10.0,  rangeEnd= 10.0,  
             valueList = [],
             descriptionList = [], 
@@ -23,10 +24,10 @@ gravityScale = SFsettings.individualSetting(
             defaultValue = 1.0
             )
 
-bulletSpeed = SFsettings.individualSetting(
+bulletSpeed = SWsettings.individualSetting(
             label = "Bullet Speed",  
             id = "bulletSpeed",  
-            widgetType = SFsettings.FLOATWIDGET,  
+            widgetType = SWsettings.FLOATWIDGET,
             rangeStart= 0.1,  rangeEnd= 10.0,  
             valueList = [],
             descriptionList = [], 
@@ -37,10 +38,10 @@ bulletSpeed = SFsettings.individualSetting(
             defaultValue = 1.0
             )
 
-bulletLife = SFsettings.individualSetting(
+bulletLife = SWsettings.individualSetting(
             label = "Bullet Life",  
             id = "bulletLife",  
-            widgetType = SFsettings.FLOATWIDGET,  
+            widgetType = SWsettings.FLOATWIDGET,
             rangeStart= 0.1,  rangeEnd= 10.0,  
             valueList = [],
             descriptionList = [], 
@@ -52,10 +53,10 @@ bulletLife = SFsettings.individualSetting(
             )
 
 
-thrusterPower=  SFsettings.individualSetting(
+thrusterPower=  SWsettings.individualSetting(
             label = "Thruster Power",  
             id = "thrusterMultiplier",  
-            widgetType = SFsettings.FLOATWIDGET,  
+            widgetType = SWsettings.FLOATWIDGET,
             rangeStart= 0.1,  rangeEnd= 10.0,  
             valueList = [],
             descriptionList = [], 

@@ -1,4 +1,3 @@
-
 import math
 from vectorLibrary import Vec2d, Vec2dCircArc
 import vectorLibrary as vl

@@ -1,5 +1,5 @@
-
 from pygameVec2d import Vec2d
+import collections
 
 DEFAULT_GRAVITY = 4.8 # metres per second per second
 
@@ -67,7 +67,7 @@ class pointMass(object):
         self.p = self.convert2Vec2d(p) # p = location of the point mass should be a Vec2d object or 2-tuple
         if g is None:
             self.g = self.DEFAULT_GRAVITY
-        if callable(g):
+        if isinstance(g, collections.Callable):
             self.g = g
         if type(g) == type(0.0):
             self.g = self.gravityFactory(g)
@@ -116,7 +116,7 @@ class pointMass(object):
         
     def dumpVals(self):
         for att in ['m', 'v','p']:
-            print "%s: %s"%(att, self.__getattribute__(att))
+            print("%s: %s"%(att, self.__getattribute__(att)))
     
 
 if __name__=='__main__':

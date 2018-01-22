@@ -109,7 +109,7 @@ class Controls(object):
         self.p2Left =pygame.K_LEFT
         self.p2Right =pygame.K_RIGHT
         self.p2Thrust =pygame.K_UP
-        self.p2Fire =pygame.K_RCTRL
+        self.p2Fire =pygame.K_RSHIFT
         self.p2Explode = pygame.K_o 
         self.pause =pygame.K_p
         self.quit =pygame.K_q 
@@ -170,11 +170,11 @@ class spaceShip(vectorSprite):
         if OnOff == True:
             self.triggers['thruster']= True  # triggers is inherited
         else:
-            if self.triggers.has_key('thruster'):
+            if 'thruster' in self.triggers:
                 del self.triggers['thruster']
     
     def internalForce(self):
-        if self.triggers.has_key('thruster'):
+        if 'thruster' in self.triggers:
             unitVector = Vec2d(1, 0)
             unitVector.rotateR(self.alpha) #self.alpha is inherited from vectorModel
             return unitVector*self.thrusterForce
@@ -276,7 +276,7 @@ class geometryManager(object):
     
     def addObject(self, object):
         k= object.id
-        if self.managedObjects.has_key(k):  
+        if k in self.managedObjects:  
             self.delObject(k)  # sigh,need to delete old object so it's blitted over on the screen 
         self.managedObjects[k] = object
 
@@ -288,16 +288,16 @@ class geometryManager(object):
             del self.managedObjects[k]
         except:
             Logd ("Geometry manager failed to delete key %s"%k)
-            Logd("Existing keys are: %s", self.managedObjects.keys())
+            Logd("Existing keys are: %s", list(self.managedObjects.keys()))
 
     def update(self, timeInSecs):
         dirtyList = []
         
-        for o in self.managedObjects.values():
+        for o in list(self.managedObjects.values()):
             r = self.screen.blit(self.bg, o.renderR, o.renderR)
             dirtyList.append(r)
         
-        for o in self.managedObjects.values():
+        for o in list(self.managedObjects.values()):
             self.geometryFunction(o)
             o.update(timeInSecs)
             r = self.screen.blit(o.image,o.renderR)   
@@ -307,48 +307,80 @@ class geometryManager(object):
             
         pygame.display.update(dirtyList)
 
-    
+
     def bounceOff(self, o):
         ''' called to determine if object o has hit a wall and, if so, bounce it off the wall '''
         tx = o.renderR.topleft[0]
         ty = o.renderR.topleft[1]
         w = o.renderR.width
         h = o.renderR.height
-        # ideally would be getting maxx, minx, maxy,miny from the object otherwise won't bounce 
+        # ideally would be getting maxx, minx, maxy,miny from the object otherwise won't bounce
         # directly from the object, but rather from the bounding rectangle
-                
+
         #TODO: do I need to change the p  rather than topleft?  yes as topleft will be overwritten on first update?
         #TODO: I probably need some form of debounce here...
-        
+
         if tx < self.minx:
-            o.renderR.topleft =  (self.minx, o.renderR.topleft[1]) # stop going past wall 
-            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s "%(o.id,  tx, ty,  w, h, o.v.x,  o.v.y))
+            o.renderR.topleft = (self.minx, o.renderR.topleft[1])  # stop going past wall
+            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (o.id, tx, ty, w, h, o.v.x, o.v.y))
             if o.v.x < 0:
                 o.v.x = -o.v.x  # reverse the x component of velocity
             return
-        if tx+w > self.maxx:
+        if tx + w > self.maxx:
             o.renderR.topleft = (self.maxx, o.renderR.topleft[1])
             if o.v.x > 0:
                 o.v.x = -o.v.x
-            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s "%(o.id,  tx, ty,  w, h, o.v.x,  o.v.y))
+            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (o.id, tx, ty, w, h, o.v.x, o.v.y))
 
         if ty < self.miny:
-            o.renderR.topleft = (o.renderR.topleft[0],  self.miny)
-            if o.v.y <0:
+            o.renderR.topleft = (o.renderR.topleft[0], self.miny)
+            if o.v.y < 0:
                 o.v.y = -o.v.y
-            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s "%(o.id,  tx, ty,  w, h, o.v.x,  o.v.y))
+            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (o.id, tx, ty, w, h, o.v.x, o.v.y))
 
-        if ty +h > self.maxy:
+        if ty + h > self.maxy:
             o.renderR.topleft = (o.renderR.topleft[0], self.maxy)
             if o.v.y > 0:
                 o.v.y = -o.v.y
-            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s "%(o.id,  tx, ty,  w, h, o.v.x,  o.v.y))
+            Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (
+            o.id, tx, ty, w, h, o.v.x, o.v.y))
 
-            
+        # if tx == self.minx:
+        #     o.renderR.topleft = (self.maxx, o.renderR.topleft[1])  # stop going past wall
+        #     Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (
+        #     o.id, tx, ty, w, h, o.v.x, o.v.y))
+        #     # if o.v.x < 0:
+        #     #     o.v.x = -o.v.x  # reverse the x component of velocity
+        #     return
+        # if tx == self.maxx:
+        #     o.renderR.topleft = (self.minx, o.renderR.topleft[1])
+        #     # if o.v.x > 0:
+        #     #     o.v.x = -o.v.x
+        #     # Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (
+        #     # o.id, tx, ty, w, h, o.v.x, o.v.y))
+        #
+        # if ty == self.miny:
+        #     o.renderR.topleft = (o.renderR.topleft[0], self.maxy)
+        #     # if o.v.y < 0:
+        #     #     o.v.y = -o.v.y
+        #     # Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (
+        #     # o.id, tx, ty, w, h, o.v.x, o.v.y))
+        #
+        # if ty == self.maxy:
+        #     o.renderR.topleft = (o.renderR.topleft[0], self.miny)
+        #     # if o.v.y > 0:
+        #     #     o.v.y = -o.v.y
+        #     # Logd("bounce: Id: %s tx: %s, ty: %s, w: %s, h: %s o.v.x: %s, o.v.y: %s " % (
+        #     # o.id, tx, ty, w, h, o.v.x, o.v.y))
+
+
 def collisionDetection(game):
+
+
+
     # move this to be a method of game?
-    for k, s in game.ships.items():
-        for b in game.bm.bullets.values():
+    for k, s in list(game.ships.items()):
+        for b in list(game.bm.bullets.values()):
             spam = s.collideOtherSprite(b)
             if spam[0]:
                 game.explode(s.id)
@@ -362,7 +394,7 @@ def collisionDetection(game):
             game.noOfHits[s.id] +=1
             break
     
-    for b in game.bm.bullets.values():
+    for b in list(game.bm.bullets.values()):
         spam = game.sun.collideOtherSprite(b)
         # TODO: Check for all terrain collisions, not just sun (if other terrain)
         if spam[0]:
@@ -372,9 +404,13 @@ def collisionDetection(game):
     
     if len(game.ships)>1:
         spam = game.ship1.collideOtherSprite(game.ship2)
-        if spam[0]:
-            game.ship1.fgColour = PINK
-            game.ship2.fgColour = PINK
+        for k, s in list(game.ships.items()):
+            if spam[0]:
+                game.explode(s.id)
+                # game.explode(game.ship2.id)
+            # b.dieAt = 0  # expire the bullet
+            # game.ship1.fgColour = PINK
+            # game.ship2.fgColour = PINK
             
 
     
@@ -497,15 +533,16 @@ class Game(object):
     
     def __init__(self, screenWidth= SCREEN_WIDTH, screenHeight = SCREEN_HEIGHT,  
                  gravity = None,  # gravity ought to be a function which takes gravityScale as a parameter 
-                 FPS = None, 
-                 ship1 = None,  ship2 = None):
+                 FPS = None,
+                 ship1 = None,  ship2 = None, caption=CAPTION):
                      
         self.delayedActions = []
-        self.clock =  pygame.time.Clock()
+        self.clock = pygame.time.Clock()
         self.screenWidth = screenWidth
         self.screenHeight=screenHeight
         self.screen =  pygame.display.set_mode([screenWidth,  screenHeight])
         self.background =  pygame.Surface([screenWidth,  screenHeight])
+        self.caption=pygame.display.set_caption(caption)
         # given that the background is just black, maybe I don't need such a bit surface?
         self.background.fill(BACKGROUND_COLOUR)
         self.screen.blit(self.background, (0, 0))
@@ -513,10 +550,10 @@ class Game(object):
         self.readoutBackground.fill(BACKGROUND_COLOUR)
         pygame.display.update()  # could possibly do this a little later?
         
-        from SFsettings import Settings
+        from SWsettings import Settings
         from settingsWidgets import settingsList
 
-        self.settings = Settings(header ="SpaceWar! Settings",  footer = "", 
+        self.settings = Settings(header ="SPACE WAR SETTINGS",  footer = "",
                                      settingsList = settingsList,  # imported from constants
                                      fgColour=WHITE,  bgColour= BLACK)
         self.createAttrsFromSettings()
@@ -532,7 +569,7 @@ class Game(object):
             self.FPS = FPS
         else:
             FPS = DEFAULT_FPS
-            
+
         self.gm = geometryManager(self.screen, self.background, 
                                                 self.screenWidth, self.screenHeight)
         
@@ -551,10 +588,10 @@ class Game(object):
         
         self.initShips(ship1, ship2)
         self.noOfHits={self.ship1.id:0,  self.ship2.id:0}
-        
-
         self.initAttrsFromSettings()
+        # self.show_go_screen()
 #        self.showIntroMessage()
+
     
     def createAttrsFromSettings(self):
         for s in self.settings.settingsList:
@@ -563,14 +600,12 @@ class Game(object):
             self.__setattr__(k, v)
             Logd("got attribute, %s at value %s"%(k, self.__getattribute__(k)))
     
-    def showIntroMessage(self):
-        introMessage = '''F1 for settings, P for pause/unpause
-Triangle controls: a,w,d, TAB
-Hex controls: up,L,R arrows, ctrl 
-h to show this message
-s for bullet time '''
+    def showIntroMessage(self, i):
+        introMessage = '''Press space bar to play again '''
 
-        self.message(introMessage, 10000)
+
+
+        self.message(i+introMessage, 10000)
 
     def initAttrsFromSettings(self):
         # given settings, initialise attributes from the values stored in settings
@@ -632,11 +667,11 @@ s for bullet time '''
             self.gm.addObject(self.ship1) 
             self.gm.addObject(self.ship2)
         else:
-            if  not self.ships.has_key(ship1.id):
+            if  ship1.id not in self.ships:
                 self.ship1 = ship1
                 self.ships[self.ship1.id]=self.ship1
                 self.gm.addObject(self.ship1) 
-            if  not self.ships.has_key(ship2.id):
+            if  ship2.id not in self.ships:
                 self.ship2 = ship2
                 self.ships[self.ship2.id]=self.ship2
                 self.gm.addObject(self.ship2)
@@ -650,7 +685,10 @@ s for bullet time '''
         I should keep the same renderwidth, then I can inherit p etc from the ship blowing up, and just pass
         in a single point?  (but then it will be scaled incorrectly... bugger)
         '''
-        
+        crash_sound = pygame.mixer.Sound("Crash.wav")
+
+        pygame.mixer.Sound.play(crash_sound)
+
         if gravity is None:
             gravity= self.gravity  # use default gravity if none specified
             
@@ -679,13 +717,13 @@ s for bullet time '''
         self.delayedActions.append(reinstateShip)
         self.gm.delObject(s.id)
 
-        Logd("Geometry manager now managing: \n%s"%self.gm.managedObjects.keys())
+        Logd("Geometry manager now managing: \n%s"%list(self.gm.managedObjects.keys()))
 
-        for k, s in self.gm.managedObjects.items():
+        for k, s in list(self.gm.managedObjects.items()):
             Logd("Id: %s\nrenderR: %s\t Renderlist: %s"%(s.id, s.renderR, s.getRenderList))
         
     def killTheOld(self):
-        for o in self.gm.managedObjects.values():
+        for o in list(self.gm.managedObjects.values()):
             if not 'dieAt' in dir(o):
                 continue
             if game.gameTime > o.dieAt:
@@ -693,29 +731,33 @@ s for bullet time '''
                 if 'whatAmI' in dir(o):
                     if o.whatAmI == 'bullet':
                         self.bm.delBullet(o)
-                
 
     def readOut(self):
         '''
         Readout is blitted to the actual game background so ships can fly in front of it
         Readout is blitted over by a special readoutBackground surface
-        ''' 
-
+        '''
+        # Used to manage how fast the screen updates
         readOutFont = BasicVectorFont(None, READOUTFONTSIZE)
-        
+
         readOutColour = DEFAULT_READOUT_COLOR  # maybe change this?
         ALIGN_RIGHT = 40
         dirtyList = []
-        
-        roX = self.screenWidth/2 - READOUT_WIDTH/2
+
+        roX = self.screenWidth / 2 - READOUT_WIDTH / 2
         roY = 20
-        readoutR = pygame.Rect(roX, roY,  READOUT_WIDTH, READOUT_HEIGHT)  
-        
+        readoutR = pygame.Rect(roX, roY, READOUT_WIDTH, READOUT_HEIGHT)
+
+
+
         s1 = readOutFont.render("%s :"%self.ship1.id, True, readOutColour,BACKGROUND_COLOUR)  # render the message
         s2 = readOutFont.render("%s :"%self.ship2.id, True, readOutColour,BACKGROUND_COLOUR)  # render the message
         s3 = readOutFont.render("%s."%self.noOfHits[self.ship2.id], True, readOutColour,BACKGROUND_COLOUR)  # render the message
-        s4 = readOutFont.render("%s."%self.noOfHits[self.ship1.id], True, readOutColour,BACKGROUND_COLOUR)  # render the message
-        # the "." character is intended to be unprintable 
+        s4 = readOutFont.render("%s." % self.noOfHits[self.ship1.id], True, readOutColour,BACKGROUND_COLOUR)  # render the message
+
+        # s5 = readOutFont.render("%s :" % output_string, True, readOutColour, BACKGROUND_COLOUR)  # render the message
+
+        # the "." character is intended to be unprintable
         # just there to address a rendering bug for 3 and 8.
 
         width = max(s1.get_rect().right, s2.get_rect().right)
@@ -724,17 +766,21 @@ s for bullet time '''
         offset = int(READOUTFONTSIZE*3.0*4.0/5.0)+4  # magic x offset for scores (right align)
         s3x = roX+width+offset - s3.get_rect().right
         s4x = roX+width+offset - s4.get_rect().right
+        # s5x = roX + width - s5.get_rect().right
 
         self.background.blit(self.readoutBackground, (roX, roY))  # overwrite the message
 
         self.background.blit(s1, (s1x, roY))  # blit s to the background
         self.background.blit(s3, (s3x, roY))
         self.background.blit(s2, (s2x, roY+20))  # Next row of text
-        self.background.blit(s4, (s4x, roY+20))  
-        
+        self.background.blit(s4, (s4x, roY+20))
+        # self.background.blit(s5, (s5x, roY + 40))
+
         self.screen.blit(self.background, (roX, roY),  readoutR)  # blit the background to the screen - need to blit an area, not whole thing
         pygame.display.update(readoutR)   # update the screen
         # wtf?
+        # pygame.display.flip()
+
         
 
     def splashScreen(self,  interlinePause=800,   timeout = 800):
@@ -759,7 +805,7 @@ s for bullet time '''
         
         time.sleep(interlinePause/1000.0)
         
-        splash2 = splashFont.render("SpaceWar!",  True,  splashColour,  BACKGROUND_COLOUR)
+        splash2 = splashFont.render("War",  True,  splashColour,  BACKGROUND_COLOUR)
         s2x= roX+180
         r2= self.screen.blit(splash2, (s2x, roY+180))  # Next row of text
         pygame.display.update(r2)
@@ -866,36 +912,149 @@ s for bullet time '''
         for j in removeList:
             self.delayedActions.pop(j)
 
+
+
+
 def gameLoop(game):
     clock = game.clock
     controls = Controls()
 
+    pygame.mixer.music.load("Jazz.wav")
+    pygame.mixer.music.play(-1)
+
     game.splashScreen()
-    game.showIntroMessage()
+    # game.showIntroMessage()
+    game.paused = True
+    game.initSettingsFromAttrs()
+    game.settings.settingsShow()
+    game.initAttrsFromSettings()
+    game.paused = False
+
+    start_ticks = pygame.time.get_ticks()  # starter
+    frame_count = 0
+    start_time = 120
+    # game.readOut("Time: ", start_time)
     game.readOut()
 
+
+
+    # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+
     while game.MAINLOOP:
+
+        # # game.readOut()
+        # # game.readOut("Time: 00:00")
+        # total_seconds = start_time - seconds  # calculate how many seconds
+        # if total_seconds < 0:
+        #     total_seconds = 0
+        #
+        # # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+        #
+        # # --- Timer going up ---
+        # # Calculate total seconds
+        # # total_seconds = frame_count // frame_rate
+        #
+        # # Divide by 60 to get total minutes
+        # remain_minutes = total_seconds // 60
+        #
+        # # Use modulus (remainder) to get seconds
+        # remain_seconds = total_seconds % 60
+        # # Use python string formatting to format in leading zeros
+        #
+        # frame_count += 1
+        # output_string = "Time: {0:02}:{1:02}".format(remain_minutes, remain_seconds)
         deltaTMillis = clock.tick(FPS)
-        deltaT = deltaTMillis/(1000.0*game.slowMo)
-        game.loopCounter  += 1
+        deltaT = deltaTMillis / (1000.0 * game.slowMo)
+        game.loopCounter += 1
+        # game.readOut(output_string)
+
 
         if not game.paused:
-            game.gameTime += deltaTMillis/game.slowMo
+
+            seconds = (pygame.time.get_ticks() - start_ticks) / 1000
+
+            game.gameTime += deltaTMillis / game.slowMo
             game.gm.update(deltaT)
             collisionDetection(game)
             game.checkDelayedActions()
             game.killTheOld()
-            
+            # total_seconds = start_time - seconds  # calculate how many seconds
+            # if total_seconds < 0:
+            #     total_seconds = 0
+            #
+            # # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+            #
+            # # --- Timer going up ---
+            # # Calculate total seconds
+            # # total_seconds = frame_count // frame_rate
+            #
+            # # Divide by 60 to get total minutes
+            # remain_minutes = total_seconds // 60
+            #
+            # # Use modulus (remainder) to get seconds
+            # remain_seconds = total_seconds % 60
+            # # Use python string formatting to format in leading zeros
+            # output_string = "Time: {0:02}:{1:02}".format(remain_minutes, remain_seconds)
+            # game.readOut(output_string)
+            # # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+            # frame_count += 1
+            # game.readOut()
+
+
+            if seconds > 20:  # if more than 10 seconds pause the game
+                game.paused = True
+                if game.noOfHits[game.ship2.id] > game.noOfHits[game.ship1.id]:
+                    i = '''HEX SHIP WON\n'''
+                elif game.noOfHits[game.ship2.id] < game.noOfHits[game.ship1.id]:
+                    i = '''TRIANGLE SHIP WON\n '''
+                else:
+                    i = '''TIE\n '''
+                # game.screen.blit(game.background, (0, 0))
+                # text_surface = game.font.render("Press space bar to play again", True, WHITE)
+                # game.screen.blit(text_surface, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 7 / 8))
+                # pygame.display.flip()
+                # # game.clock.tick(FPS)
+
+                game.showIntroMessage(i)
+
+                # game.noOfHits[s.id] = 0
+                # break
+
+
+
+
+
+            print(seconds)
+
             if game.loopCounter %100 == 0:
                 game.readOut()
       
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 game.MAINLOOP = False
+
             elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    game.noOfHits[game.ship1.id] = 0
+                    game.noOfHits[game.ship2.id] = 0
+                    gameLoop(game)
+                    # for k, s in list(game.ships.items()):
+
+                    game.explode(game.ship1.id)
+                    game.explode(game.ship2.id)
+                    game.gm.delObject(game.ship1.id)
+                    game.gm.delObject(game.ship2.id)
+                    game.initShips(game.ship1, game.ship2)
+                    # game.gm.delObject(game.ship1.id)
+                    # game.gm.delObject(game.ship2.id)
+
+
+
+
                 if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                     game.MAINLOOP= False
-                
+
                 if event.key == controls.p1Left:
                     Logd( "got a p1 left rotate")
                     game.ship1.rotating = -1.0
@@ -926,12 +1085,14 @@ def gameLoop(game):
                 
                 if event.key == controls.slowMo:
                     game.slowMo = 10
-                
 
             elif event.type == pygame.KEYUP:
                 if event.key == controls.p1Fire:
+                    shoot_sound = pygame.mixer.Sound("shoot.wav")
+
+                    pygame.mixer.Sound.play(shoot_sound)
                     Logd( "got p1 fire")
-                    if game.ships.has_key(game.ship1.id):
+                    if game.ship1.id in game.ships:
                         game.bm.newBullet(game.ship1, 
                                 game.gravity,
                                 game.gameTime,  
@@ -940,8 +1101,11 @@ def gameLoop(game):
                                 game.bulletLife)
 
                 if event.key == controls.p2Fire:
+                    shoot_sound = pygame.mixer.Sound("shoot.wav")
+
+                    pygame.mixer.Sound.play(shoot_sound)
                     Logd( "got p2 fire")
-                    if game.ships.has_key(game.ship2.id):
+                    if game.ship2.id in game.ships:
                         game.bm.newBullet(game.ship2, 
                                 game.gravity,
                                 game.gameTime,  
@@ -965,17 +1129,20 @@ def gameLoop(game):
                 if event.key == controls.pause:
                     if  game.paused: 
                         game.paused = False
+                        pygame.mixer.music.unpause()
+
                     else:
                         game.paused = True
+                        pygame.mixer.music.pause()
 
                 if event.key == controls.dumpVals:
                     Logd( "Got a dump vals ")
-                    for k, s in game.ships.items():
+                    for k, s in list(game.ships.items()):
                         s.dumpVals()
                 
                 if event.key == controls.restart:
                     Logd( "got a restart")
-                    game.initShips()
+                    game.initShips(game.ship1,game.ship2)
                     # will this work??  
                     # Apparently it does, but 
                     # it is a blunt instrument and might be better to have 
@@ -1026,7 +1193,7 @@ def gameLoop(game):
 
 
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     game = Game(SCREEN_WIDTH,  SCREEN_HEIGHT)
     gameLoop(game)
     

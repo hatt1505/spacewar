@@ -1,3 +1,23 @@
+'''
+Copyright (C) 2012 Brendan Scott
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/
+
+Version info:
+1.0beta 22 November 2012
+
+'''
 
 import math
 import pygame
@@ -7,7 +27,7 @@ from pygameVec2d import Vec2d
 from copy import deepcopy
 import itertools
 import logging
-import cPickle
+import pickle
 
 ## Test
 
@@ -78,15 +98,15 @@ class BasicVectorFont():
         # load predefined font  - will likely break if modelComponent class changes
         fn = "vlvectorFontMC_Dict.pickle"
         f = open(fn, 'rb')
-        self.mcDict = cPickle.load(f)
+        self.mcDict = pickle.load(f)
         f.close()
         self.width = width
         self.spriteDict={}
-        for k in self.mcDict.keys():
+        for k in list(self.mcDict.keys()):
             self.spriteDict[k] = vectorSprite(renderWidth = width,  modelComponents=[self.mcDict[k]])
             self.spriteDict[k].update(1)
         
-        self.renderable = self.spriteDict.keys()
+        self.renderable = list(self.spriteDict.keys())
         
         
     def render(self, textToRender, discard1=None, discard2=None, discard3 = None):
@@ -218,7 +238,7 @@ class vec2dLineSegment(Vec2dShell):
         pt_v = circ_pos - seg_a
         if seg_v.get_length() <= 0:
             Logd("closest_point_on_seg: Got segment of length zero: ",  seg_a,  seg_b,  self.p1,  self.p2)
-            raise ValueError, "Invalid segment length"
+            raise ValueError("Invalid segment length")
         seg_v_unit = seg_v / seg_v.get_length()
         proj = pt_v.dot(seg_v_unit)
         if proj <= 0:
@@ -873,7 +893,7 @@ class vectorModel(object):
         self.updateRenderList()
             
         for o in self.modelComponents:
-            if self.triggers.has_key(o.trigger):
+            if o.trigger in self.triggers:
                 o.fillMe(self.image)
                 o.drawMe(self.image, requestedColour=self.fgColour)
         
@@ -961,9 +981,9 @@ class vectorModel(object):
                             'scaleFactor','longestRay','renderWidth', 'centre', 
                             'renderR','collisionLSList', 'collisionArcList',
                             'alpha', 'omega', 'rotationPoint']:
-            print "%s: %s"%(att, self.__getattribute__(att))
+            print("%s: %s"%(att, self.__getattribute__(att)))
         for o in self.modelComponents:
-            print o.baseCollisionLSList
+            print(o.baseCollisionLSList)
           
     def updateRenderList(self):
         # rotate and scale the basePointList to match current alpha, scaleFactor
@@ -1030,10 +1050,10 @@ class vectorSprite (vectorModel, pointMass):
         
     
     def dumpVals(self):
-        print "*************** Dumping values for sprite: %s"%self.spriteName
-        print "\n** vectorModel"
+        print("*************** Dumping values for sprite: %s"%self.spriteName)
+        print("\n** vectorModel")
         vectorModel.dumpVals(self)
-        print "\n** pointMass"
+        print("\n** pointMass")
         pointMass.dumpVals(self)
     
     def update(self, timeInSecs):
@@ -1158,6 +1178,7 @@ if __name__ =="__main__":
     screen = pygame.display.set_mode([SCREEN_WIDTH,  SCREEN_HEIGHT])
     background = pygame.Surface([SCREEN_WIDTH,  SCREEN_HEIGHT])
     background.fill(BLACK)
+
     
    #vm = vectorModel(50, basePolygonList= polyList, baseLSList= lsList,  omega=math.pi)
 #    vm.dumpVals()
@@ -1366,11 +1387,11 @@ if __name__ =="__main__":
                     MAINLOOP= False
                     
                 if event.key == pygame.K_LEFT:
-                    print "got a left rotate"
+                    print("got a left rotate")
                     rotating = 1
                     
                 if event.key == pygame.K_RIGHT:
-                    print "got a right rotate"
+                    print("got a right rotate")
                     rotating = -1
                 
                 if event.key == pygame.K_s:
@@ -1378,7 +1399,7 @@ if __name__ =="__main__":
                 
                 if event.key == pygame.K_UP or event.key == pygame.K_SPACE:
                     # fire thrusters
-                    print "got a thruster fire"
+                    print("got a thruster fire")
                     s2.triggers["thruster"]=True
                     s3.triggers["thruster"]=True
                     
@@ -1387,11 +1408,11 @@ if __name__ =="__main__":
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
-                    print "stop right rotate"
+                    print("stop right rotate")
                     rotating = 0
                         
                 if event.key == pygame.K_RIGHT:
-                    print "stop right rotate"
+                    print("stop right rotate")
                     rotating = 0
                     
                 if event.key == pygame.K_p:
@@ -1412,7 +1433,7 @@ if __name__ =="__main__":
                     # stop thrusters
                     del s2.triggers['thruster']
                     del s3.triggers["thruster"]
-                    print "got a stop thruster"      
+                    print("got a stop thruster")      
         if count ==1:
               paused = True
 
